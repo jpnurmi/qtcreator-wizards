@@ -1,74 +1,43 @@
 import QtQuick %{QtQuickVersion}
-import QtQuick.Controls %{QtQuickControls2Version}
+import QtQuick.Window %{QtQuickWindowVersion}
 import QtQuick.Layouts %{QtQuickLayoutsVersion}
-@if %{UseVirtualKeyboard}
-import QtQuick.VirtualKeyboard %{QtQuickVirtualKeyboardVersion}
-@endif
+import QtQuick.Controls %{QtQuickControls2Version}
 
 ApplicationWindow {
+    id: window
+    width: 360
+    height: 360
     visible: true
-    width: 640
-    height: 480
-    title: qsTr("Hello World")
-@if %{UseVirtualKeyboard}
-    id: root
+@if %{HasHeader}
+
+    header: ToolBar { }
 @endif
+@if %{HasFooter}
 
-    SwipeView {
-        id: swipeView
+    footer: ToolBar { }
+@endif
+@if %{HasDrawer}
+
+    Drawer {
+        id: drawer
+        width: window.width / 2
+        height: window.height
+    }
+@endif
+@if %{HasButton}
+
+    Button {
+        id: button
+        text: "Button"
+        anchors.centerIn: parent
+    }
+@endif
+@if %{HasStackView}
+
+    StackView {
+        id: stackView
         anchors.fill: parent
-        currentIndex: tabBar.currentIndex
-
-        Page1 {
-        }
-
-        Page {
-            Label {
-                text: qsTr("Second page")
-                anchors.centerIn: parent
-            }
-        }
-    }
-
-    footer: TabBar {
-        id: tabBar
-        currentIndex: swipeView.currentIndex
-        TabButton {
-            text: qsTr("First")
-        }
-        TabButton {
-            text: qsTr("Second")
-        }
-    }
-@if %{UseVirtualKeyboard}
-
-    InputPanel {
-        id: inputPanel
-        z: 99
-        x: 0
-        y: root.height
-        width: root.width
-
-        states: State {
-            name: "visible"
-            when: inputPanel.active
-            PropertyChanges {
-                target: inputPanel
-                y: root.height - inputPanel.height
-            }
-        }
-        transitions: Transition {
-            from: ""
-            to: "visible"
-            reversible: true
-            ParallelAnimation {
-                NumberAnimation {
-                    properties: "y"
-                    duration: 250
-                    easing.type: Easing.InOutQuad
-                }
-            }
-        }
+        initialItem: Page { }
     }
 @endif
 }
