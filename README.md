@@ -1,5 +1,7 @@
 # Qt Quick application wizard templates for Qt Creator
 
+![Screenshot](https://raw.github.com/jpnurmi/qtcreator-wizards/master/screenshot.png)
+
 ## Locate and cleanup the installed Qt Quick app templates
 
     cd ~/Qt/Tools/QtCreator/share/qtcreator/templates/wizards/projects/qmake
