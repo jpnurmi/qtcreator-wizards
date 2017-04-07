@@ -1,13 +1,15 @@
 #!/bin/bash
 
-if [ -z $DESTDIR ]; then
-    DESTDIR="$HOME/Qt/Tools/QtCreator"
-fi
+PREFIXES="$HOME /C"
 
-UNAME=`uname -s | tr '[:upper:]' '[:lower:]'`
-if [ $UNAME != "linux" ]; then
-    echo "ERROR: Supported platforms: Linux" # TODO
-    exit 1
+if [ -z $DESTDIR ]; then
+    for p in $PREFIXES; do
+        QTDIR="$p/Qt"
+        if [ -d $QTDIR ]; then
+            DESTDIR="$QTDIR/Tools/QtCreator"
+            break
+        fi
+    done
 fi
 
 SRCDIR=`dirname $0`
