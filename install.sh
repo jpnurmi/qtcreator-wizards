@@ -5,16 +5,19 @@ PREFIXES="$HOME /C"
 if [ -z $DESTDIR ]; then
     for p in $PREFIXES; do
         QTDIR="$p/Qt"
-        if [ -d $QTDIR ]; then
-            DESTDIR="$QTDIR/Tools/QtCreator"
-            break
+        if [ -d "$QTDIR/Qt Creator.app" ]; then
+            DESTDIR="$QTDIR/Qt Creator.app/Contents/Resources"
+        else
+            if [ -d $QTDIR ]; then
+                DESTDIR="$QTDIR/Tools/QtCreator/share/qtcreator"
+            fi
         fi
     done
 fi
 
 SRCDIR=`dirname $0`
 SRCDIR=`(cd "$SRCDIR"; /bin/pwd)`
-WIZDIR="share/qtcreator/templates/wizards/projects/qmake"
+WIZDIR="templates/wizards/projects/qmake"
 
 ADD="qtquickapplication qtquickcontrols2application"
 REMOVE="qtquickapplication qtquickcontrolsapplication qtquickcontrols2application"
