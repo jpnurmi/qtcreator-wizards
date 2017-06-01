@@ -30,17 +30,18 @@ fi
 
 echo "DESTDIR=$DESTDIR"
 cd "$DESTDIR/$WIZDIR"
+pwd
 
 for r in $REMOVE; do
-    if [ -e $r ]; then
+    if [ -d "$r" ] || [ -L "$r" ]; then
         echo "rm -r $WIZDIR/$r"
-        rm -r $r
+        rm -r "$r"
     fi
 done
 
 for a in $ADD; do
     if [ ! -L "$a" ]; then
         echo "ln -s $WIZDIR/$a"
-        ln -s "$SRCDIR/$WIZDIR/$a"
+        ln -s "$SRCDIR/share/qtcreator/$WIZDIR/$a"
     fi
 done
